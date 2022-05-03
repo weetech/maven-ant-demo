@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- ====================================================================== -->
-<!-- Ant build file (http://ant.apache.org/) for Ant 1.6.2 or above.        -->
-<!-- ====================================================================== -->
-
 <project name="maven-ant-demo" default="package" basedir=".">
 
-  <!-- ====================================================================== -->
-  <!-- Import maven-build.xml into the current project                        -->
-  <!-- ====================================================================== -->
+  <target name="pull">
+    <exec dir="." executable="sh">
+      <arg line="-c 'git pull'" />
+    </exec>
+  </target>
 
-  <import file="maven-build.xml"/>
-  
-  <!-- ====================================================================== -->
-  <!-- Help target                                                            -->
-  <!-- ====================================================================== -->
+  <target name="clean" depends="pull">
+    <exec dir="." executable="sh">
+      <arg line="-c 'mvn clean'" />
+    </exec>
+  </target>
 
-  <target name="help">
-    <echo message="Please run: $ant -projecthelp"/>
+  <target name="compile" depends="clean">
+    <exec dir="." executable="sh">
+      <arg line="-c 'mvn compile'" />
+    </exec>
+  </target>
+
+  <target name="package" depends="compile">
+    <exec dir="." executable="sh">
+      <arg line="-c 'mvn package'" />
+    </exec>
   </target>
 
 </project>
